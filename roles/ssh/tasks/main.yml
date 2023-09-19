@@ -45,17 +45,6 @@
     name: keychain
     state: present
 
-- name: Install x11-ask-pass
-  pacman:
-    name: x11-ssh-askpass
-    state: present
-
-- name: Export SSH_ASKPASS environment variable
-  lineinfile:
-    dest: /etc/profile
-    state: present
-    line: "export SSH_ASKPASS=\"/usr/lib/ssh/x11-ssh-askpass\""
-
 - name: Make directory for user SSH key
   file:
     path: /home/{{ user.name }}/.ssh
@@ -71,8 +60,3 @@
     owner:  "{{ user.name }}"
     group: "{{ user.group }}"
   when: ssh.user_key is defined
-
-- name: Install Mosh
-  pacman:
-    name: mosh
-    state: present
